@@ -1,11 +1,9 @@
-import './index.scss';
-
-import React from 'react';
-import { render } from 'react-dom';
-
-import { register } from './serviceWorker';
-import TestComponent from './TestComponent';
-
+import React, { useState } from "react";
+import { render } from "react-dom";
+import { register } from "./serviceWorker";
+import styles from "./index.css";
+import { VisitT } from "./TypesTS/VisitT";
+import VisitsCalendar from "./VisitsCalendar/VisitsCalendar";
 // here we disable console and performance for better production experience
 // console.log(process.env.NODE_ENV);
 // if (!process || !process.env || process.env.NODE_ENV !== "development") {
@@ -14,11 +12,13 @@ import TestComponent from './TestComponent';
 //   console.log = () => undefined as any;
 // }
 
-const App = () => (
-  <div styleName="a">
-    kek <TestComponent />
-  </div>
-);
+export default function App() {
+  return (
+    <div className={styles.container}>
+      <VisitsCalendar inputMonths={[0, 1, 2, 3]}></VisitsCalendar>
+    </div>
+  );
+}
 
 render(<App />, document.getElementById("root"));
 

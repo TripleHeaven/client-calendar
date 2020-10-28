@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;550&display=swap');
+* {
+  font-family: 'Roboto', sans-serif;
+}
+html,
+body {
+  margin: 0;
+}
+.calendarContainer {
+  width: 200px;
+  height: 150px;
+  padding-left: 26px;
+  margin-right: -6px;
+  margin-top: -2px;
+}
+.calendarDays {
+  width: 167px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 20px;
+  font-size: 12px;
+  margin-top: -11px;
+  margin-left: -4px;
+}
+
+.calendarDays p {
+  width: 11px;
+  text-align: center;
+  justify-content: center;
+}
+.daysItself {
+  display: flex;
+  width: 161px;
+  height: 40px;
+  flex-wrap: wrap;
+}
+.calDays {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  display: flex;
+  width: 183px;
+  /* height: 100px; */
+  flex-wrap: wrap;
+
+  justify-content: flex-start;
+  padding-top: 13px;
+  margin-left: -10px;
+}
+
+.month {
+  font-size: 12px;
+  margin-top: -2px;
+  margin-left: -3px;
+  display: flex;
+  width: 200px;
+  height: 20px;
+}
+.boldM {
+  font-weight: 550;
+}

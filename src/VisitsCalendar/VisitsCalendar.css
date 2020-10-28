@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+.dot {
+  height: 4px;
+  width: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  display: inline-block;
+}
+.container {
+  position: relative;
+  width: 708px;
+  height: 197px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+.title {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  height: 50px;
+  font-weight: 500;
+  display: flex;
+}
+.titleButtonS:hover {
+  cursor: pointer;
+  font-weight: 600;
+}
+.titleButtonN:hover {
+  cursor: pointer;
+  font-weight: 600;
+}
+.titleButton:hover {
+  cursor: pointer;
+  font-weight: 600;
+}
+.mainTitle {
+  display: inline-block;
+  padding-left: 22px;
+  padding-top: 2.4px;
+}
+.threeDots {
+  display: inline-block;
+  width: 15px;
+  padding-left: 208px;
+  padding-top: 23px;
+}
+.titleButtons {
+  display: inline-block;
+  padding-top: 4.6px;
+  padding-left: 16px;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  height: 15px;
+}
+.arrowI {
+  width: 15px;
+  height: 15px;
+
+  display: inline-block;
+}
+.arrowN {
+  width: 15px;
+  height: 15px;
+  padding-left: 5px;
+  display: inline-block;
+}
+.titleButtons p {
+  display: inline-block;
+}
+.titleButton {
+  display: inline-block;
+  padding-left: 30px;
+  cursor: pointer;
+}
+.titleButtonS {
+  display: inline-block;
+  padding-left: 0px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.titleButtonN {
+  display: inline-block;
+  padding-left: 31px;
+  cursor: pointer;
+}
+
+.tdContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.infoLevel {
+  display: flex;
+  justify-content: space-between;
+}
+.clientInfo {
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+}
+.infoLeft {
+  padding-left: 12px;
+}
+.infoRight {
+  padding-right: 21px;
+}
+.categoryName {
+  display: inline-block;
+  width: 110px;
+  font-weight: 500;
+}
+.categoryName text {
+  padding-left: 10px;
+}
+.param {
+  display: inline-block;
+  font-weight: 400;
+  font-size: 12px;
+  width: 120px;
+}
+.space {
+  height: 10px;
+}
+.showButton {
+  padding-left: 22px;
+  padding-top: 4px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.categoryName p {
+  display: inline;
+}
+.calendarContainer {
+  display: flex;
+}

@@ -1,0 +1,69 @@
+html,
+body {
+  margin: 0;
+}
+
+.regular {
+  justify-content: center;
+  text-align: center;
+  color: rgba(0, 0, 0, 1);
+  margin-top: 0;
+  margin-bottom: 2.5px;
+  height: 14px;
+  width: 25.7px;
+}
+
+.special:hover {
+  font-weight: 600;
+  cursor: pointer;
+}
+.none {
+  justify-content: center;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.2);
+  margin-top: 0;
+  margin-bottom: 2.5px;
+  height: 14px;
+  width: 25.7px;
+}
+.special {
+  color: #0047ff;
+
+  text-align: center;
+  justify-content: center;
+
+  margin-top: 0;
+  margin-bottom: 2.5px;
+  height: 14px;
+  width: 25.7px;
+}
+.empty {
+  display: none;
+}
+.template {
+  display: none;
+}
+.specialOff {
+  display: none;
+}
+.specialOn {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.specialInner {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 25%;
+  margin: auto;
+  background: white;
+}
