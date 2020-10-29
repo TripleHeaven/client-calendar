@@ -8,17 +8,20 @@
 }
 .container {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 708px;
   height: 197px;
   border-radius: 8px;
   background-color: #ffffff;
+  justify-content: flex-start;
 }
 .title {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   height: 50px;
   font-weight: 500;
-  display: flex;
+  width: 100%;
 }
 .titleButtonS:hover {
   cursor: pointer;
@@ -128,4 +131,6 @@
 }
 .calendarContainer {
   display: flex;
+  flex-direction: row;
+  min-width: 0;
 }

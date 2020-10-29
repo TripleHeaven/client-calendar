@@ -53,7 +53,13 @@ export function getVisitsForOneMonth(quantity: number, month: number): RecordT {
     currentMinDate = currentMinDate + getRandomInt(1, 5);
     indexOfActivity = getRandomInt(0, activities.length);
     visits.push({
-      date: new Date(2020, month, currentMinDate),
+      date: new Date(
+        2020,
+        month,
+        currentMinDate,
+        getRandomInt(1, 12),
+        getRandomInt(0, 60)
+      ),
       eventName: activities[indexOfActivity],
       trainerName: trainerNames[indexOfActivity],
     });

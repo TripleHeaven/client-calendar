@@ -4,8 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { VisitT } from "../TypesTS/VisitT";
 import CreateCalendar from "./CreateCalendar";
-import { useState } from "react";
+import PropTypes from "prop-types";
+import { useState, useEffect, useRef } from "react";
 import { RecordT } from "../TypesTS/RecordT";
+import ResizeObserver from "resize-observer-polyfill";
+import axios from "axios";
 import {
   getVisitsForMonths,
   getVisitsForOneMonth,
@@ -21,6 +24,54 @@ export default function VisitsCalendar({
   const [months, setMonth] = useState({
     months: inputMonths,
   });
+  const ref = useRef(null);
+
+  // we are useEffect with empty state dependency to
+  // only call this when the width of the calendar container is changed
+  useEffect(() => {
+    let quantityMonths;
+    let newMonths;
+    let width;
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        width = entry.contentRect.width;
+        quantityMonths = Math.round(width / 226);
+        newMonths = inputMonths.slice(0, quantityMonths);
+        console.log(newMonths);
+        setMonth({
+          months: newMonths,
+        });
+      }
+    });
+    ro.observe(document.getElementById("cWidth"));
+  }, []);
+  // useEffect(() => {
+  //   let width = document.getElementById("cWidth")?.offsetWidth;
+  //   let quantityMonths = Math.round(width / 226);
+  //   let newMonths = inputMonths.slice(0, quantityMonths);
+  //   console.log(
+  //     " w  ",
+  //     width,
+  //     "  qM ",
+  //     quantityMonths,
+  //     " newMonths ",
+  //     newMonths
+  //   );
+  //   setMonth({
+  //     months: newMonths,
+  //   });
+  // }, []);
+  // width of minicalendar
+  //
+
+  // useEffect(() => {
+  //   resizeObserver.observe(document.getElementById("cWidth"));
+  //   resizeObserver.unobserve(document.getElementById("cWidth"));
+  //   // setMonth({
+  //   //   months: newMonths,
+  //   // });
+  // });
+
   // let curIndex = months.months[0];
   function changeMonth(index: number) {
     // returning  new array
@@ -51,7 +102,7 @@ export default function VisitsCalendar({
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="cWidth" ref={ref}>
       <div className={styles.title}>
         <p className={styles.mainTitle}>Visits calendar</p>
         <div className={styles.titleButtons}>

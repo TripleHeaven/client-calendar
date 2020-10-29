@@ -15,6 +15,7 @@ import VisitsCalendar from "./VisitsCalendar/VisitsCalendar";
 export default function App() {
   return (
     <div className={styles.container}>
+      {/* Here we want to set the basic state of the calendar */}
       <VisitsCalendar inputMonths={[0, 1, 2, 3]}></VisitsCalendar>
     </div>
   );
