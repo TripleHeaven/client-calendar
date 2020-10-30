@@ -30,7 +30,6 @@ export default function CreateCalendar({
   for (let i = 0; i < visits.length; i++) {
     visitDates.push(visits[i].date);
   }
-  console.log(visits);
   function isSpecialDay(date: Date, visitDates: Array<Date>) {
     for (let l = 0; l < visitDates.length; l++) {
       if (
