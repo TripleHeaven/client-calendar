@@ -29,6 +29,10 @@
     "typescript": "^3.6.3",
     "unstated-next": "^1.1.0",
     "use-hooks": "^2.0.0-rc.4"
+    
+  },
+  "resolutions": {
+    "@types/react": "16.7.18"
   },
   "devDependencies": {
     "@babel/core": "^7.6.3",

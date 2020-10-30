@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { render } from "react-dom";
 import { register } from "./serviceWorker";
 import styles from "./index.css";
-import { VisitT } from "./TypesTS/VisitT";
 import VisitsCalendar from "./VisitsCalendar/VisitsCalendar";
 // here we disable console and performance for better production experience
 // console.log(process.env.NODE_ENV);
@@ -16,7 +15,9 @@ export default function App() {
   return (
     <div className={styles.container}>
       {/* Here we want to set the basic state of the calendar */}
-      <VisitsCalendar inputMonths={[0, 1, 2, 3]}></VisitsCalendar>
+      <VisitsCalendar
+        inputMonths={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}
+      ></VisitsCalendar>
     </div>
   );
 }

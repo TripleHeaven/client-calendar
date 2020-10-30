@@ -54,6 +54,7 @@ body {
   display: none;
 }
 .specialOn {
+  font-size: 11px;
   display: flex;
   flex-direction: column;
   margin-top: 3.5px;

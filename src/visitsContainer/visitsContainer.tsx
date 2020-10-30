@@ -1,8 +1,3 @@
-import React from "react";
-import styles from "./VisitsCalendar.css";
-import { useState } from "react";
-import { createContainer } from "unstated-next";
-import { VisitT } from "../TypesTS/VisitT";
 import { RecordT } from "../TypesTS/RecordT";
 // getting visits for month
 // the purpose of this container of this container is to
@@ -16,15 +11,7 @@ function getRandomInt(min: number, max: number) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
 }
-// const infoForVisits = [
-//   { "Jefferson Johnes": "TRX Functionality" },
-//   { "Monicca Belucci": "Fitness" },
-//   { "Alex Mork": "Football" },
-//   { "Dylan Ross": "Volleyball" },
-//   { "Michael Bay": "Box" },
-//   { "Michael Jordan": "Basketball" },
-//   { "Cate Black": "Fitness Old" },
-// ];
+// base list of activities
 const activities: string[] = [
   "TRX Functionality",
   "Fitness",
@@ -43,7 +30,7 @@ const trainerNames: string[] = [
   "Michael Jordan",
   "Cathe Blake",
 ];
-
+// getting visit for one certain month
 export function getVisitsForOneMonth(quantity: number, month: number): RecordT {
   const visits = [];
   let currentMinDate = 1;
