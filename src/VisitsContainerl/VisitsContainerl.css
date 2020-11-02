@@ -74,20 +74,38 @@
   display: inline-block;
 }
 .titleButton {
-  width: 120px;
+  min-width: 20px;
 
   cursor: pointer;
 }
 .titleButtonS {
   text-align: center;
   font-size: 13px;
-  width: 85px;
+  min-width: 50px;
   cursor: pointer;
   margin-top: 11px;
+  flex-shrink: 1;
 }
 .titleButtonN {
-  width: 100px;
+  min-width: 50px;
   cursor: pointer;
+}
+
+/* 440 px */
+
+.tbHidden {
+  display: flex;
+  min-width: 50px;
+  justify-content: space-between;
+  padding-top: 6px;
+  padding-left: 16px;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  height: 15px;
+  margin-top: 10px;
+}
+.notVisibleHidden {
+  display: none;
 }
 
 .tdContainer {

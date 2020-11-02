@@ -17,7 +17,14 @@ export default function VisitsContainerl() {
   const [monthsInCal, setMonth] = useState({
     months: monthsCont.months.slice(0, 5),
   });
-
+  const [visibilityForOneMonth, setVisibility] = useState({
+    visibility: {
+      prev: styles.prevPerLabelVisible,
+      next: styles.nextPerLabelVisible,
+      tb: styles.titleButtons,
+      tbS: styles.titleButtonS,
+    },
+  });
   function changeMonth(index: number) {
     // returning  new array
     setContMonth({
@@ -65,6 +72,26 @@ export default function VisitsContainerl() {
         setMonth({
           months: getNewMonths(quantityMonths),
         });
+        if (width < 450) {
+          setVisibility({
+            visibility: {
+              prev: styles.notVisibleHidden,
+              next: styles.notVisibleHidden,
+              tb: styles.tbHidden,
+              tbS: styles.notVisibleHidden,
+            },
+          });
+        } else {
+          setVisibility({
+            visibility: {
+              prev: styles.titleButtonS,
+              next: styles.titleButtonN,
+              tb: styles.titleButtons,
+              tbS: styles.titleButtonS,
+            },
+          });
+        }
+        console.log(width);
       }
     });
     getNewMonths(0);
@@ -80,8 +107,10 @@ export default function VisitsContainerl() {
       <div className={styles.container} id="cWidth">
         <div className={styles.title}>
           <p className={styles.mainTitle}>Visits calendar</p>
-          <div className={styles.titleButtons}>
-            <p className={styles.titleButtonS}>Show Months</p>
+          <div className={visibilityForOneMonth.visibility.tb}>
+            <div className={visibilityForOneMonth.visibility.tbS}>
+              Show Months
+            </div>
             <div className={styles.titleButton} onClick={() => changeMonth(-1)}>
               <div className={styles.arrowI}>
                 <FontAwesomeIcon
@@ -89,10 +118,14 @@ export default function VisitsContainerl() {
                   color="rgba(0, 0, 0, 0.4)"
                 />
               </div>
-              <p>Previouts period</p>
+              <p className={visibilityForOneMonth.visibility.prev}>
+                Previouts period
+              </p>
             </div>
             <div className={styles.titleButtonN} onClick={() => changeMonth(1)}>
-              <p>Next period</p>
+              <p className={visibilityForOneMonth.visibility.next}>
+                Next period
+              </p>
               <div className={styles.arrowN}>
                 <FontAwesomeIcon
                   icon={faArrowLeft}
