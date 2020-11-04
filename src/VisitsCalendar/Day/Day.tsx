@@ -19,6 +19,13 @@ export default function Day({ day }: { day: DayT }) {
   const [popupVisibility, setPopupVisibility] = useState({
     isPVisible: styles.specialOff,
   });
+  const toDisplayTime = (timeValue: string): string => {
+    if (timeValue.length < 2) {
+      return "0" + timeValue;
+    } else {
+      return timeValue;
+    }
+  };
   function toggleVisibility() {
     if (day.stateThing === "special") {
       // first toggling, we need to check the type of the day
@@ -55,7 +62,8 @@ export default function Day({ day }: { day: DayT }) {
       {day.dayNum}
       <div className={popupVisibility.isPVisible}>
         <div className={styles.activityTimeName}>
-          {day.activity.date.getHours()}:{day.activity.date.getMinutes()}{" "}
+          {toDisplayTime(day.activity.date.getHours().toString())}:
+          {toDisplayTime(day.activity.date.getMinutes().toString())}{" "}
           {day.activity.eventName}
         </div>
         <div className={styles.traineeName}>{day.activity.trainerName}</div>

@@ -15,21 +15,23 @@ export default function VisitsContainerl() {
   });
 
   const [monthsInCal, setMonth] = useState({
-    months: monthsCont.months.slice(0, 5),
+    months: [1],
   });
+
+  // basic state , happens when we rendering page
   const [visibilityForOneMonth, setVisibility] = useState({
     visibility: {
-      prev: styles.prevPerLabelVisible,
-      next: styles.nextPerLabelVisible,
+      prev: styles.titleButtonS,
+      next: styles.titleButtonN,
       tb: styles.titleButtons,
       tbS: styles.titleButtonS,
     },
   });
   function changeMonth(index: number) {
     // returning  new array
-    setContMonth({
-      months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    });
+    // setContMonth({
+    //   months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    // });
     function createMonthsArray(startMonth: number, quantityMonths: number) {
       const arrayWithMonths = [];
       let curmonth = startMonth;
@@ -67,12 +69,12 @@ export default function VisitsContainerl() {
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
         width = entry.contentRect.width;
-        quantityMonths = Math.floor(width / 220);
+        quantityMonths = Math.floor(width / 200);
 
         setMonth({
           months: getNewMonths(quantityMonths),
         });
-        if (width < 450) {
+        if (width < 497) {
           setVisibility({
             visibility: {
               prev: styles.notVisibleHidden,
