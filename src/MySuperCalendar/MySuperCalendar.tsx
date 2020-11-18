@@ -1,26 +1,25 @@
 import React from "react";
-import styles from "./VisitsContainerl.css";
+import styles from "./MySuperCalendar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import VisitsCalendar from "../VisitsCalendar/VisitsCalendar";
 import ResizeObserver from "resize-observer-polyfill";
 import { Context } from "../context";
+import { getVisitsForMonths } from "../visitsContainer/visitsContainer";
 
-interface DateConstructor {
-  new (value: number | string | Date): Date;
-}
-export default function VisitsContainerl() {
+export default function MySuperCalendar() {
   // we get only months that we need to build calendar on
   // then we neet to call function that will generate visits for given months
   const [monthsCont] = useState({
     months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   });
 
-  const [datesInCal, setDate] = useState({
-    dates: [new Date()],
+  const [monthsInCal, setMonth] = useState({
+    months: [1],
   });
-
+  const yearForState = new Date();
+  const [year, setYear] = useState(yearForState.getFullYear());
   // basic state , happens when we rendering page
   const [visibilityForOneMonth, setVisibility] = useState({
     visibility: {
@@ -35,41 +34,31 @@ export default function VisitsContainerl() {
     // setContMonth({
     //   months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     // });
-    function createDatesArray(
-      startMonth: Date,
-      quantityMonths: number,
-      isAnotherYear: number
-    ) {
-      const arrayWithDates = [];
-      const curmonth = startMonth;
-      curmonth.setFullYear(curmonth.getFullYear() + isAnotherYear);
+    function createMonthsArray(startMonth: number, quantityMonths: number) {
+      const arrayWithMonths = [];
+      let curmonth = startMonth;
       for (let i = 0; i < quantityMonths; i++) {
-        arrayWithDates.push(
-          new Date(curmonth.getFullYear(), curmonth.getMonth())
-        );
-        curmonth.setMonth(curmonth.getMonth() + 1);
+        if (curmonth > 11) {
+          curmonth = 0;
+        }
+        arrayWithMonths.push(curmonth);
+        curmonth += 1;
       }
+      return arrayWithMonths;
+    }
+    let curIndex = monthsInCal.months[0];
 
-      return arrayWithDates;
-    }
-    let curIndex = datesInCal.dates[0].getMonth();
-    let flag = 0;
-    if (index > 0 && curIndex + datesInCal.dates.length > 11) {
+    if (index > 0 && curIndex + monthsInCal.months.length > 11) {
       curIndex = 0;
-      flag = 1;
-    } else if (index < 0 && curIndex - datesInCal.dates.length < 0) {
-      curIndex = 12 - datesInCal.dates.length;
-      flag = -1;
+      setYear(year + 1);
+    } else if (index < 0 && curIndex - monthsInCal.months.length < 0) {
+      curIndex = 12 - monthsInCal.months.length;
+      setYear(year - 1);
     } else {
-      curIndex =
-        datesInCal.dates[0].getMonth() + datesInCal.dates.length * index;
+      curIndex = monthsInCal.months[0] + monthsInCal.months.length * index;
     }
-    setDate({
-      dates: createDatesArray(
-        new Date(datesInCal.dates[0].getFullYear(), curIndex),
-        datesInCal.dates.length,
-        flag
-      ),
+    setMonth({
+      months: createMonthsArray(curIndex, monthsInCal.months.length),
     });
   }
 
@@ -79,20 +68,15 @@ export default function VisitsContainerl() {
     let quantityMonths;
     let width;
     function getNewMonths(quantity: number) {
-      const forReturn = [];
-      const months = monthsCont.months.slice(0, quantity);
-      for (let i = 0; i < months.length; i++) {
-        forReturn.push(new Date(new Date().getFullYear(), months[i]));
-      }
-      return forReturn;
+      return monthsCont.months.slice(0, quantity);
     }
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
         width = entry.contentRect.width;
         quantityMonths = Math.floor(width / 200);
 
-        setDate({
-          dates: getNewMonths(quantityMonths),
+        setMonth({
+          months: getNewMonths(quantityMonths),
         });
         if (width < 497) {
           setVisibility({
@@ -165,7 +149,10 @@ export default function VisitsContainerl() {
             </div>
           </div>
         </div>
-        <VisitsCalendar inputDates={datesInCal.dates}></VisitsCalendar>
+        <VisitsCalendar
+          inputMonths={monthsInCal.months}
+          year={year}
+        ></VisitsCalendar>
       </div>
     </Context.Provider>
   );

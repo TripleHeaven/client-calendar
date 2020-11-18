@@ -4,13 +4,13 @@ import { VisitT } from "../../TypesTS/VisitT";
 import { DayT } from "../../TypesTS/DayT";
 import Day from "../Day/Day";
 export default function CreateCalendar({
-  monthNumber,
+  inputDate,
   visits,
 }: {
-  monthNumber: number;
+  inputDate: Date;
   visits: VisitT[];
 }) {
-  const yearNumber = visits[0].date.getFullYear();
+  const yearNumber = inputDate.getFullYear();
   let sDays = 0;
   const numToMonthA: { [key: number]: string } = {
     0: "January",
@@ -51,12 +51,12 @@ export default function CreateCalendar({
   function quantityDaysInMonth(month: number, year: number) {
     return new Date(year, month, 0).getDate();
   }
-  const mon = monthNumber;
+  const mon = inputDate.getMonth();
 
-  const d = new Date(yearNumber, monthNumber, 1);
+  const d = new Date(yearNumber, inputDate.getMonth(), 1);
   const thisMonthDays: Array<DayT> = [];
   for (let i = 0; i < getDay(d); i++) {
-    if (monthNumber === 0) {
+    if (inputDate.getMonth() === 0) {
       thisMonthDays.push({
         dayNum: (
           quantityDaysInMonth(12, yearNumber - 1) -
@@ -69,7 +69,7 @@ export default function CreateCalendar({
     } else {
       thisMonthDays.push({
         dayNum: (
-          quantityDaysInMonth(monthNumber - 1, yearNumber) -
+          quantityDaysInMonth(inputDate.getMonth() - 1, yearNumber) -
           (getDay(d) - i) +
           1
         ).toString(),

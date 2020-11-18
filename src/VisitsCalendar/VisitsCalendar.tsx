@@ -3,11 +3,7 @@ import styles from "./VisitsCalendar.css";
 import CreateCalendar from "./CreateCalendar";
 import { getVisitsForOneMonth } from "../visitsContainer/visitsContainer";
 
-export default function VisitsCalendar({
-  inputMonths,
-}: {
-  inputMonths: number[];
-}) {
+export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
   // we get only months that we need to build calendar on
   // then we neet to call function that will generate visits for given months
 
@@ -17,11 +13,11 @@ export default function VisitsCalendar({
   return (
     <div className={styles.container} id="cWidth">
       <div className={styles.calendarContainer}>
-        {inputMonths.map((oneMonth) => (
+        {inputDates.map((item) => (
           <CreateCalendar
-            key={oneMonth}
-            monthNumber={oneMonth}
-            visits={getVisitsForOneMonth(5, oneMonth).visitsList}
+            key={item.getMonth()}
+            inputDate={item}
+            visits={getVisitsForOneMonth(5, item.getMonth()).visitsList}
           />
         ))}
       </div>
