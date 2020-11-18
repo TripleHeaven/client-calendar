@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import styles from "./Day.css";
 import { DayT } from "../../TypesTS/DayT";
-
+import { VisibilityContext } from "../VisibilityContext";
 export default function Day({ day }: { day: DayT }) {
   // we need two states
   // first one indicates if the popup exist for this day or not
@@ -26,6 +26,55 @@ export default function Day({ day }: { day: DayT }) {
       return timeValue;
     }
   };
+  const { calendarItems, visibleDayId, setVisibleDay } = useContext(
+    VisibilityContext
+  );
+  function findADayIndex(dayid: number) {
+    for (let i = 0; i < calendarItems.length; i++) {
+      for (let j = 0; j < calendarItems[i].days.length; j++) {
+        if (calendarItems[i].days[j].dayId === day.dayId) {
+          return [i, j];
+        }
+      }
+    }
+    return [100, 100];
+  }
+  function toggleGlobalVisibility() {
+    const currentDayIndex = findADayIndex(day.dayId);
+    const dayC = calendarItems[currentDayIndex[0]].days[currentDayIndex[1]];
+    if (day.stateThing === "special") {
+      // first toggling, we need to check the type of the day
+      if (popupVisibility.isPVisible === styles.special) {
+        setPopupVisibility({
+          isPVisible: styles.specialOn,
+        });
+        setGlobalVisibility({
+          isGVisible: styles.globalOn,
+        });
+      } else if (popupVisibility.isPVisible === styles.specialOn) {
+        setPopupVisibility({
+          isPVisible: styles.specialOff,
+        });
+        setGlobalVisibility({
+          isGVisible: styles.special,
+        });
+      } else if (popupVisibility.isPVisible === styles.specialOff) {
+        setPopupVisibility({
+          isPVisible: styles.specialOn,
+        });
+        setGlobalVisibility({
+          isGVisible: styles.globalOn,
+        });
+      }
+    }
+
+    let previousDayIndex;
+    let dayP;
+    if (visibleDayId !== 0) {
+      const previousDayIndex = findADayIndex(visibleDayId);
+      const dayP = calendarItems[previousDayIndex[0]].days[previousDayIndex[1]];
+    }
+  }
   function toggleVisibility() {
     if (day.stateThing === "special") {
       // first toggling, we need to check the type of the day
@@ -57,7 +106,7 @@ export default function Day({ day }: { day: DayT }) {
   return (
     <div
       className={globalVisibility.isGVisible}
-      onClick={() => toggleVisibility()}
+      onClick={() => toggleGlobalVisibility()}
     >
       {day.dayNum}
       <div className={popupVisibility.isPVisible}>
