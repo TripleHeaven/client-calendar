@@ -10,7 +10,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 708px;
+  width: 100%;
+  min-width: 218px;
   height: 197px;
   border-radius: 8px;
   background-color: #ffffff;

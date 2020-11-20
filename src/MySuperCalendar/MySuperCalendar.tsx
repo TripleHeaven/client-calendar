@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import VisitsCalendar from "../VisitsCalendar/VisitsCalendar";
 import ResizeObserver from "resize-observer-polyfill";
 import { Context } from "../context";
-import { getVisitsForMonths } from "../visitsContainer/visitsContainer";
 
 export default function MySuperCalendar() {
   // we get only months that we need to build calendar on
@@ -15,11 +14,10 @@ export default function MySuperCalendar() {
     months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   });
 
-  const [monthsInCal, setMonth] = useState({
-    months: [1],
+  const [datesInCal, setDate] = useState({
+    dates: [new Date()],
   });
-  const yearForState = new Date();
-  const [year, setYear] = useState(yearForState.getFullYear());
+
   // basic state , happens when we rendering page
   const [visibilityForOneMonth, setVisibility] = useState({
     visibility: {
@@ -34,31 +32,41 @@ export default function MySuperCalendar() {
     // setContMonth({
     //   months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     // });
-    function createMonthsArray(startMonth: number, quantityMonths: number) {
-      const arrayWithMonths = [];
-      let curmonth = startMonth;
+    function createDatesArray(
+      startMonth: Date,
+      quantityMonths: number,
+      isAnotherYear: number
+    ) {
+      const arrayWithDates = [];
+      const curmonth = startMonth;
+      curmonth.setFullYear(curmonth.getFullYear() + isAnotherYear);
       for (let i = 0; i < quantityMonths; i++) {
-        if (curmonth > 11) {
-          curmonth = 0;
-        }
-        arrayWithMonths.push(curmonth);
-        curmonth += 1;
+        arrayWithDates.push(
+          new Date(curmonth.getFullYear(), curmonth.getMonth())
+        );
+        curmonth.setMonth(curmonth.getMonth() + 1);
       }
-      return arrayWithMonths;
-    }
-    let curIndex = monthsInCal.months[0];
 
-    if (index > 0 && curIndex + monthsInCal.months.length > 11) {
-      curIndex = 0;
-      setYear(year + 1);
-    } else if (index < 0 && curIndex - monthsInCal.months.length < 0) {
-      curIndex = 12 - monthsInCal.months.length;
-      setYear(year - 1);
-    } else {
-      curIndex = monthsInCal.months[0] + monthsInCal.months.length * index;
+      return arrayWithDates;
     }
-    setMonth({
-      months: createMonthsArray(curIndex, monthsInCal.months.length),
+    let curIndex = datesInCal.dates[0].getMonth();
+    let flag = 0;
+    if (index > 0 && curIndex + datesInCal.dates.length > 11) {
+      curIndex = 0;
+      flag = 1;
+    } else if (index < 0 && curIndex - datesInCal.dates.length < 0) {
+      curIndex = 12 - datesInCal.dates.length;
+      flag = -1;
+    } else {
+      curIndex =
+        datesInCal.dates[0].getMonth() + datesInCal.dates.length * index;
+    }
+    setDate({
+      dates: createDatesArray(
+        new Date(datesInCal.dates[0].getFullYear(), curIndex),
+        datesInCal.dates.length,
+        flag
+      ),
     });
   }
 
@@ -68,15 +76,20 @@ export default function MySuperCalendar() {
     let quantityMonths;
     let width;
     function getNewMonths(quantity: number) {
-      return monthsCont.months.slice(0, quantity);
+      const forReturn = [];
+      const months = monthsCont.months.slice(0, quantity);
+      for (let i = 0; i < months.length; i++) {
+        forReturn.push(new Date(new Date().getFullYear(), months[i]));
+      }
+      return forReturn;
     }
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
         width = entry.contentRect.width;
         quantityMonths = Math.floor(width / 200);
 
-        setMonth({
-          months: getNewMonths(quantityMonths),
+        setDate({
+          dates: getNewMonths(quantityMonths),
         });
         if (width < 497) {
           setVisibility({
@@ -149,10 +162,7 @@ export default function MySuperCalendar() {
             </div>
           </div>
         </div>
-        <VisitsCalendar
-          inputMonths={monthsInCal.months}
-          year={year}
-        ></VisitsCalendar>
+        <VisitsCalendar inputDates={datesInCal.dates}></VisitsCalendar>
       </div>
     </Context.Provider>
   );

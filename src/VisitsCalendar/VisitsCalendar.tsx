@@ -63,6 +63,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
         thisMonthDays.push({
           dayId: Number(
             mon.toString() +
+              d.getDate().toString() +
               (
                 quantityDaysInMonth(12, yearNumber - 1) -
                 (getDay(d) - i) +
@@ -83,6 +84,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
         thisMonthDays.push({
           dayId: Number(
             mon.toString() +
+              d.getDate().toString() +
               (
                 quantityDaysInMonth(12, yearNumber - 1) -
                 (getDay(d) - i) +
@@ -108,6 +110,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
         thisMonthDays.push({
           dayId: Number(
             mon.toString() +
+              d.getDate().toString() +
               (
                 quantityDaysInMonth(12, yearNumber - 1) -
                 (getDay(d) - sDays) +
@@ -125,6 +128,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
         thisMonthDays.push({
           dayId: Number(
             mon.toString() +
+              d.getDate().toString() +
               (
                 quantityDaysInMonth(12, yearNumber - 1) -
                 (getDay(d) - sDays) +
@@ -146,6 +150,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
         thisMonthDays.push({
           dayId: Number(
             mon.toString() +
+              d.getDate().toString() +
               (
                 quantityDaysInMonth(12, yearNumber - 1) -
                 (getDay(d) - i) +
@@ -181,7 +186,6 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
         );
         arrayWithDays.push(iterObject);
       }
-      console.log("calItemsChanged");
       setCalendarItems(arrayWithDays);
     }
     setVisibleDay(0);
