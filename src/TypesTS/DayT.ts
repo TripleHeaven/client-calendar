@@ -5,4 +5,5 @@ export interface DayT {
   dayNum: string;
   stateThing: string;
   activity : VisitT;
+  isVisible : boolean;
 }

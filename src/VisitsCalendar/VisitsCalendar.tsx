@@ -77,6 +77,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
           ).toString(),
           stateThing: "none",
           activity: { date: new Date(), eventName: "", trainerName: "" },
+          isVisible: false,
         });
       } else {
         thisMonthDays.push({
@@ -96,6 +97,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
           ).toString(),
           stateThing: "none",
           activity: { date: new Date(), eventName: "", trainerName: "" },
+          isVisible: false,
         });
       }
     }
@@ -116,6 +118,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
           dayNum: d.getDate().toString(),
           stateThing: "special",
           activity: visits[indexVisit],
+          isVisible: false,
         });
         indexVisit += 1;
       } else {
@@ -132,6 +135,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
           dayNum: d.getDate().toString(),
           stateThing: "regular",
           activity: { date: new Date(), eventName: "", trainerName: "" },
+          isVisible: false,
         });
       }
       d.setDate(d.getDate() + 1);
@@ -152,6 +156,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
           dayNum: dayNext.toString(),
           stateThing: "none",
           activity: { date: new Date(), eventName: "", trainerName: "" },
+          isVisible: false,
         });
         dayNext += 1;
       }
@@ -176,13 +181,15 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
         );
         arrayWithDays.push(iterObject);
       }
+      console.log("calItemsChanged");
       setCalendarItems(arrayWithDays);
     }
+    setVisibleDay(0);
     createCalendarItems();
   }, [inputDates]);
   return (
     <VisibilityContext.Provider
-      value={{ calendarItems, visibleDayId, setVisibleDay }}
+      value={{ calendarItems, visibleDayId, setVisibleDay, setCalendarItems }}
     >
       <div className={styles.container} id="cWidth">
         <div className={styles.calendarContainer}>
