@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import { register } from "./serviceWorker";
 import styles from "./index.css";
 import MySuperCalendar from "./MySuperCalendar/MySuperCalendar";
+
 // here we disable console and performance for better production experience
 // console.log(process.env.NODE_ENV);
 // if (!process || !process.env || process.env.NODE_ENV !== "development") {
