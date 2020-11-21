@@ -69,25 +69,31 @@ export default function MySuperCalendar() {
       ),
     });
   }
-
+  function getNewMonths(quantity: number) {
+    const forReturn = [];
+    const months = monthsCont.months.slice(0, quantity);
+    for (let i = 0; i < months.length; i++) {
+      forReturn.push(new Date(new Date().getFullYear(), months[i]));
+    }
+    return forReturn;
+  }
   // we are useEffect with empty state dependency to
   // only call this when the width of the calendar container is changed
+  const [quant, setQuant] = useState(0);
+  useEffect(() => {
+    setDate({
+      dates: getNewMonths(quant),
+    });
+  }, [quant]);
   useEffect(() => {
     let quantityMonths;
     let width;
-    function getNewMonths(quantity: number) {
-      const forReturn = [];
-      const months = monthsCont.months.slice(0, quantity);
-      for (let i = 0; i < months.length; i++) {
-        forReturn.push(new Date(new Date().getFullYear(), months[i]));
-      }
-      return forReturn;
-    }
-    const ro = new ResizeObserver((entries) => {
-      for (const entry of entries) {
+
+    let firstR = true;
+    function onChangeSize(entry: Element, flag: boolean) {
+      if (flag) {
         width = entry.contentRect.width;
         quantityMonths = Math.floor(width / 200);
-
         setDate({
           dates: getNewMonths(quantityMonths),
         });
@@ -111,6 +117,38 @@ export default function MySuperCalendar() {
           });
         }
         console.log(width);
+      } else {
+        width = entry.contentRect.width;
+        quantityMonths = Math.floor(width / 200);
+        if (quantityMonths !== quant) {
+          setQuant(quantityMonths);
+        }
+        if (width < 497) {
+          setVisibility({
+            visibility: {
+              prev: styles.notVisibleHidden,
+              next: styles.notVisibleHidden,
+              tb: styles.tbHidden,
+              tbS: styles.notVisibleHidden,
+            },
+          });
+        } else {
+          setVisibility({
+            visibility: {
+              prev: styles.titleButtonS,
+              next: styles.titleButtonN,
+              tb: styles.titleButtons,
+              tbS: styles.titleButtonS,
+            },
+          });
+        }
+        console.log(width);
+      }
+    }
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        onChangeSize(entry, firstR);
+        firstR = false;
       }
     });
     getNewMonths(0);
