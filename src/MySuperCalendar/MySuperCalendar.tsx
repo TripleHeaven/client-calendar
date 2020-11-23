@@ -71,7 +71,8 @@ export default function MySuperCalendar() {
   }
   function getNewMonths(quantity: number) {
     const forReturn = [];
-    const months = monthsCont.months.slice(0, quantity);
+    const Bmonths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const months = Bmonths.slice(0, quantity);
     for (let i = 0; i < months.length; i++) {
       forReturn.push(new Date(new Date().getFullYear(), months[i]));
     }
@@ -90,7 +91,7 @@ export default function MySuperCalendar() {
     let width;
 
     let firstR = true;
-    function onChangeSize(entry: Element, flag: boolean) {
+    function onChangeSize(entry: ResizeObserverEntry, flag: boolean) {
       if (flag) {
         width = entry.contentRect.width;
         quantityMonths = Math.floor(width / 200);
@@ -151,7 +152,6 @@ export default function MySuperCalendar() {
         firstR = false;
       }
     });
-    getNewMonths(0);
     ro.observe(document.getElementById("cWidth") as Element);
   }, [monthsCont.months]);
 
