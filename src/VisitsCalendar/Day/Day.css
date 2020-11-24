@@ -11,7 +11,7 @@ body {
   margin-bottom: 2.5px;
   height: 14px;
   width: 25.7px;
-  z-index: 1;
+  z-index: 100;
 }
 
 .special:hover {
@@ -30,7 +30,7 @@ body {
   margin-bottom: 2.5px;
   height: 14px;
   width: 25.7px;
-  z-index: 1;
+  z-index: 100;
 }
 .special {
   color: #0047ff;
@@ -42,7 +42,7 @@ body {
   margin-bottom: 2.5px;
   height: 14px;
   width: 25.7px;
-  z-index: 1;
+  z-index: 100;
 }
 .empty {
   display: none;
@@ -79,7 +79,7 @@ body {
   height: 14px;
   width: 25.7px;
 
-  z-index: 100;
+  z-index: 1000;
 }
 .specialOn .activityTimeName {
   text-align: start;

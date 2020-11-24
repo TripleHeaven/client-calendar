@@ -43,7 +43,7 @@ export default function Day({ day }: { day: DayT }) {
     }
     return [100, 100];
   }
-  function toggleGlobalVisibility() {
+  function toggleGlobalVisibility(event: React.MouseEvent) {
     const currentDayIndex = findADayIndex(day.dayId);
     const dayC = calendarItems[currentDayIndex[0]].days[currentDayIndex[1]];
     if (visibleDayId === 0) {
@@ -68,6 +68,7 @@ export default function Day({ day }: { day: DayT }) {
       setVisibleDay(dayC.dayId);
     }
     setCalendarItems(calendarItems.slice(0, calendarItems.length));
+    event.stopPropagation();
   }
   useEffect(() => {
     if (day.stateThing === "special") {
@@ -92,7 +93,7 @@ export default function Day({ day }: { day: DayT }) {
   return (
     <div
       className={globalVisibility.isGVisible}
-      onClick={() => toggleGlobalVisibility()}
+      onClick={(event) => toggleGlobalVisibility(event)}
     >
       {day.dayNum}
       <div className={popupVisibility.isPVisible}>

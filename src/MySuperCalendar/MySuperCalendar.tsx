@@ -117,7 +117,6 @@ export default function MySuperCalendar() {
             },
           });
         }
-        console.log(width);
       } else {
         width = entry.contentRect.width;
         quantityMonths = Math.floor(width / 200);
