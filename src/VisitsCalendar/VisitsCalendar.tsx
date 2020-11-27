@@ -192,30 +192,12 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
     setVisibleDay(0);
     createCalendarItems();
   }, [inputDates]);
-  function toggleOffGlobalVisibility() {
-    function createCalendarItems() {
-      const arrayWithDays: CalendarItemT[] = [];
-      for (let i = 0; i < inputDates.length; i++) {
-        const iterObject = makeADaysArray(
-          inputDates[i],
-          getVisitsForOneMonth(2, inputDates[i].getMonth()).visitsList
-        );
-        arrayWithDays.push(iterObject);
-      }
-      setCalendarItems(arrayWithDays);
-    }
-    createCalendarItems();
-    setVisibleDay(0);
-  }
+
   return (
     <VisibilityContext.Provider
       value={{ calendarItems, visibleDayId, setVisibleDay, setCalendarItems }}
     >
-      <div
-        className={styles.container}
-        id="cWidth"
-        onClick={() => toggleOffGlobalVisibility()}
-      >
+      <div className={styles.container} id="cWidth">
         <div className={styles.calendarContainer}>
           {calendarItems.map((item) => (
             <CreateCalendar

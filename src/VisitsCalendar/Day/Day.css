@@ -67,7 +67,9 @@ body {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
-
+.specialOn:hover {
+  cursor: default;
+}
 .globalOn {
   color: #0047ff;
   font-size: 12px;

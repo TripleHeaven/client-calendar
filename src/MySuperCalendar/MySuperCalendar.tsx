@@ -1,8 +1,8 @@
-import React from "react";
+import React, { RefObject } from "react";
 import styles from "./MySuperCalendar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import VisitsCalendar from "../VisitsCalendar/VisitsCalendar";
 import ResizeObserver from "resize-observer-polyfill";
 import { Context } from "../context";
@@ -13,11 +13,9 @@ export default function MySuperCalendar() {
   const [monthsCont] = useState({
     months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   });
-
   const [datesInCal, setDate] = useState({
     dates: [new Date()],
   });
-
   // basic state , happens when we rendering page
   const [visibilityForOneMonth, setVisibility] = useState({
     visibility: {
@@ -27,11 +25,7 @@ export default function MySuperCalendar() {
       tbS: styles.titleButtonS,
     },
   });
-  function changeMonth(index: number) {
-    // returning  new array
-    // setContMonth({
-    //   months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    // });
+  function changeMonth(index: number, event: React.MouseEvent) {
     function createDatesArray(
       startMonth: Date,
       quantityMonths: number,
@@ -68,6 +62,7 @@ export default function MySuperCalendar() {
         flag
       ),
     });
+    event.stopPropagation();
   }
   function getNewMonths(quantity: number) {
     const forReturn = [];
@@ -142,7 +137,6 @@ export default function MySuperCalendar() {
             },
           });
         }
-        console.log(width);
       }
     }
     const ro = new ResizeObserver((entries) => {
@@ -153,21 +147,69 @@ export default function MySuperCalendar() {
     });
     ro.observe(document.getElementById("cWidth") as Element);
   }, [monthsCont.months]);
+  function toggleOffVisibility() {
+    function createDatesArray(startMonth: Date, quantityMonths: number) {
+      const arrayWithDates = [];
+      const curmonth = startMonth;
+      curmonth.setFullYear(curmonth.getFullYear());
+      for (let i = 0; i < quantityMonths; i++) {
+        arrayWithDates.push(
+          new Date(curmonth.getFullYear(), curmonth.getMonth())
+        );
+        curmonth.setMonth(curmonth.getMonth() + 1);
+      }
 
+      return arrayWithDates;
+    }
+    const curIndex = datesInCal.dates[0].getMonth();
+    setDate({
+      dates: createDatesArray(
+        new Date(datesInCal.dates[0].getFullYear(), curIndex),
+        datesInCal.dates.length
+      ),
+    });
+  }
+  function useOutsideAlerter(ref: RefObject<HTMLDivElement>) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+
+      function handleClickOutside(event: MouseEvent) {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
+          toggleOffVisibility();
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref, datesInCal]);
+  }
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef);
   return (
     <Context.Provider
       value={{
         changeMonth,
       }}
     >
-      <div className={styles.container} id="cWidth">
+      <div
+        ref={wrapperRef}
+        className={styles.container}
+        id="cWidth"
+        onClick={() => toggleOffVisibility()}
+      >
         <div className={styles.title}>
           <p className={styles.mainTitle}>Visits calendar</p>
           <div className={visibilityForOneMonth.visibility.tb}>
             <div className={visibilityForOneMonth.visibility.tbS}>
               Show Months
             </div>
-            <div className={styles.titleButton} onClick={() => changeMonth(-1)}>
+            <div
+              className={styles.titleButton}
+              onClick={(event) => changeMonth(-1, event)}
+            >
               <div className={styles.arrowI}>
                 <FontAwesomeIcon
                   icon={faArrowLeft}
@@ -178,7 +220,10 @@ export default function MySuperCalendar() {
                 Previouts period
               </p>
             </div>
-            <div className={styles.titleButtonN} onClick={() => changeMonth(1)}>
+            <div
+              className={styles.titleButtonN}
+              onClick={(event) => changeMonth(1, event)}
+            >
               <p className={visibilityForOneMonth.visibility.next}>
                 Next period
               </p>

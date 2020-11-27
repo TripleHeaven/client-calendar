@@ -96,7 +96,10 @@ export default function Day({ day }: { day: DayT }) {
       onClick={(event) => toggleGlobalVisibility(event)}
     >
       {day.dayNum}
-      <div className={popupVisibility.isPVisible}>
+      <div
+        className={popupVisibility.isPVisible}
+        onClick={(event) => event.stopPropagation()}
+      >
         <div className={styles.activityTimeName}>
           {toDisplayTime(day.activity.date.getHours().toString())}:
           {toDisplayTime(day.activity.date.getMinutes().toString())}{" "}
