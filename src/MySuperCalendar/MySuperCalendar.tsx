@@ -47,10 +47,10 @@ export default function MySuperCalendar() {
     let curIndex = datesInCal.dates[0].getMonth();
     let flag = 0;
     if (index > 0 && curIndex + datesInCal.dates.length > 11) {
-      curIndex = 0;
+      curIndex = datesInCal.dates.length - 1;
       flag = 1;
     } else if (index < 0 && curIndex - datesInCal.dates.length < 0) {
-      curIndex = 12 - datesInCal.dates.length;
+      curIndex = 12 - datesInCal.dates.length - 1;
       flag = -1;
     } else {
       curIndex =
@@ -68,7 +68,10 @@ export default function MySuperCalendar() {
   function getNewMonths(quantity: number) {
     const forReturn = [];
     const Bmonths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-    const months = Bmonths.slice(0, quantity);
+    const months = [];
+    for (let i = 0; i < quantity; i++) {
+      months.push(new Date().getMonth() + i);
+    }
     for (let i = 0; i < months.length; i++) {
       forReturn.push(new Date(new Date().getFullYear(), months[i]));
     }
