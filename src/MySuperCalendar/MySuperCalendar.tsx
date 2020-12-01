@@ -15,7 +15,7 @@ export default function MySuperCalendar() {
     months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   });
   const [datesInCal, setDate] = useState({
-    dates: [new Date()],
+    dates: [DateTime.local()],
   });
   // basic state , happens when we rendering page
   const [visibilityForOneMonth, setVisibility] = useState({
@@ -28,23 +28,21 @@ export default function MySuperCalendar() {
   });
   function changeMonth(index: number, event: React.MouseEvent) {
     function createDatesArray(
-      startMonth: Date,
+      startMonth: DateTime,
       quantityMonths: number,
       isAnotherYear: number
     ) {
       const arrayWithDates = [];
       const curmonth = startMonth;
-      curmonth.setFullYear(curmonth.getFullYear() + isAnotherYear);
+      curmonth.set({ year: curmonth.year + isAnotherYear });
       for (let i = 0; i < quantityMonths; i++) {
-        arrayWithDates.push(
-          new Date(curmonth.getFullYear(), curmonth.getMonth())
-        );
-        curmonth.setMonth(curmonth.getMonth() + 1);
+        arrayWithDates.push(DateTime.local(curmonth.year, curmonth.month));
+        curmonth.set({ month: curmonth.month + 1 });
       }
 
       return arrayWithDates;
     }
-    let curIndex = datesInCal.dates[0].getMonth();
+    let curIndex = datesInCal.dates[0].month;
     let flag = 0;
     if (index > 0 && curIndex + datesInCal.dates.length > 11) {
       curIndex = datesInCal.dates.length - 1;
@@ -53,12 +51,11 @@ export default function MySuperCalendar() {
       curIndex = 12 - datesInCal.dates.length - 1;
       flag = -1;
     } else {
-      curIndex =
-        datesInCal.dates[0].getMonth() + datesInCal.dates.length * index;
+      curIndex = datesInCal.dates[0].month + datesInCal.dates.length * index;
     }
     setDate({
       dates: createDatesArray(
-        new Date(datesInCal.dates[0].getFullYear(), curIndex),
+        DateTime.local(datesInCal.dates[0].year, curIndex),
         datesInCal.dates.length,
         flag
       ),
@@ -67,13 +64,12 @@ export default function MySuperCalendar() {
   }
   function getNewMonths(quantity: number) {
     const forReturn = [];
-    const Bmonths = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     const months = [];
     for (let i = 0; i < quantity; i++) {
       months.push(new Date().getMonth() + i);
     }
     for (let i = 0; i < months.length; i++) {
-      forReturn.push(new Date(new Date().getFullYear(), months[i]));
+      forReturn.push(DateTime.local(DateTime.local().year, months[i]));
     }
     return forReturn;
   }
@@ -152,23 +148,21 @@ export default function MySuperCalendar() {
     ro.observe(document.getElementById("cWidth") as Element);
   }, [monthsCont.months]);
   function toggleOffVisibility() {
-    function createDatesArray(startMonth: Date, quantityMonths: number) {
+    function createDatesArray(startMonth: DateTime, quantityMonths: number) {
       const arrayWithDates = [];
       const curmonth = startMonth;
-      curmonth.setFullYear(curmonth.getFullYear());
+      curmonth.set({ year: curmonth.year });
       for (let i = 0; i < quantityMonths; i++) {
-        arrayWithDates.push(
-          new Date(curmonth.getFullYear(), curmonth.getMonth())
-        );
-        curmonth.setMonth(curmonth.getMonth() + 1);
+        arrayWithDates.push(DateTime.local(curmonth.year, curmonth.month));
+        curmonth.set({ month: curmonth.month + 1 });
       }
 
       return arrayWithDates;
     }
-    const curIndex = datesInCal.dates[0].getMonth();
+    const curIndex = datesInCal.dates[0].month;
     setDate({
       dates: createDatesArray(
-        new Date(datesInCal.dates[0].getFullYear(), curIndex),
+        DateTime.local(datesInCal.dates[0].year, curIndex),
         datesInCal.dates.length
       ),
     });

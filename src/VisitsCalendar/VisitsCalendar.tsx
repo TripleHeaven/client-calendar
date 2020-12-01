@@ -6,14 +6,19 @@ import { DayT } from "../TypesTS/DayT";
 import { VisitT } from "../TypesTS/VisitT";
 import { CalendarItemT } from "../TypesTS/CalendarItemT";
 import { VisibilityContext } from "./VisibilityContext";
-export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
-  function makeADaysArray(inputDate: Date, visits: VisitT[]) {
+import { DateTime } from "luxon";
+export default function VisitsCalendar({
+  inputDates,
+}: {
+  inputDates: DateTime[];
+}) {
+  function makeADaysArray(inputDate: DateTime, visits: VisitT[]) {
     function getRandomInt(min: number, max: number) {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
-    const yearNumber = inputDate.getFullYear();
+    const yearNumber = inputDate.year;
     let sDays = 0;
     const numToMonthA: { [key: number]: string } = {
       0: "January",
@@ -54,12 +59,12 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
     function quantityDaysInMonth(month: number, year: number) {
       return new Date(year, month, 0).getDate();
     }
-    const mon = inputDate.getMonth();
+    const mon = inputDate.month;
 
-    const d = new Date(yearNumber, inputDate.getMonth(), 1);
+    const d = new Date(yearNumber, inputDate.month, 1);
     const thisMonthDays: Array<DayT> = [];
     for (let i = 0; i < getDay(d); i++) {
-      if (inputDate.getMonth() === 0) {
+      if (inputDate.month === 0) {
         thisMonthDays.push({
           dayId: Number(
             mon.toString() +
@@ -93,7 +98,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
               getRandomInt(1, 10000)
           ),
           dayNum: (
-            quantityDaysInMonth(inputDate.getMonth() - 1, yearNumber) -
+            quantityDaysInMonth(inputDate.month - 1, yearNumber) -
             (getDay(d) - i) +
             1
           ).toString(),
@@ -183,7 +188,7 @@ export default function VisitsCalendar({ inputDates }: { inputDates: Date[] }) {
       for (let i = 0; i < inputDates.length; i++) {
         const iterObject = makeADaysArray(
           inputDates[i],
-          getVisitsForOneMonth(2, inputDates[i].getMonth()).visitsList
+          getVisitsForOneMonth(2, inputDates[i].month).visitsList
         );
         arrayWithDays.push(iterObject);
       }
