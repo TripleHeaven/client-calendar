@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import VisitsCalendar from "../VisitsCalendar/VisitsCalendar";
 import ResizeObserver from "resize-observer-polyfill";
 import { Context } from "../context";
+import { DateTime } from "luxon";
 
 export default function MySuperCalendar() {
   // we get only months that we need to build calendar on
@@ -188,6 +189,7 @@ export default function MySuperCalendar() {
   }
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
+
   return (
     <Context.Provider
       value={{
