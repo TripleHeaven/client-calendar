@@ -5,9 +5,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import VisitsCalendar from "../VisitsCalendar/VisitsCalendar";
 import ResizeObserver from "resize-observer-polyfill";
-import { Context } from "../context";
 import { DateTime } from "luxon";
-
 export default function MySuperCalendar() {
   // we get only months that we need to build calendar on
   // then we neet to call function that will generate visits for given months
@@ -182,65 +180,53 @@ export default function MySuperCalendar() {
   }
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
-
   return (
-    <Context.Provider
-      value={{
-        changeMonth,
-      }}
+    <div
+      ref={wrapperRef}
+      className={styles.container}
+      id="cWidth"
+      onClick={() => toggleOffVisibility()}
     >
-      <div
-        ref={wrapperRef}
-        className={styles.container}
-        id="cWidth"
-        onClick={() => toggleOffVisibility()}
-      >
-        <div className={styles.title}>
-          <p className={styles.mainTitle}>Visits calendar</p>
-          <div className={visibilityForOneMonth.visibility.tb}>
-            <div className={visibilityForOneMonth.visibility.tbS}>
-              Show Months
-            </div>
-            <div
-              className={styles.titleButton}
-              onClick={(event) => changeMonth(-1, event)}
-            >
-              <div className={styles.arrowI}>
-                <FontAwesomeIcon
-                  icon={faArrowLeft}
-                  color="rgba(0, 0, 0, 0.4)"
-                />
-              </div>
-              <p className={visibilityForOneMonth.visibility.prev}>
-                Previouts period
-              </p>
-            </div>
-            <div
-              className={styles.titleButtonN}
-              onClick={(event) => changeMonth(1, event)}
-            >
-              <p className={visibilityForOneMonth.visibility.next}>
-                Next period
-              </p>
-              <div className={styles.arrowN}>
-                <FontAwesomeIcon
-                  icon={faArrowLeft}
-                  flip="horizontal"
-                  color="rgba(0, 0, 0, 0.4)"
-                ></FontAwesomeIcon>
-              </div>
-            </div>
+      <div className={styles.title}>
+        <p className={styles.mainTitle}>Visits calendar</p>
+        <div className={visibilityForOneMonth.visibility.tb}>
+          <div className={visibilityForOneMonth.visibility.tbS}>
+            Show Months
           </div>
-          <div className={styles.threeDots}>
-            <div className={styles.tdContainer}>
-              <div className={styles.dot}></div>
-              <div className={styles.dot}></div>
-              <div className={styles.dot}></div>
+          <div
+            className={styles.titleButton}
+            onClick={(event) => changeMonth(-1, event)}
+          >
+            <div className={styles.arrowI}>
+              <FontAwesomeIcon icon={faArrowLeft} color="rgba(0, 0, 0, 0.4)" />
+            </div>
+            <p className={visibilityForOneMonth.visibility.prev}>
+              Previouts period
+            </p>
+          </div>
+          <div
+            className={styles.titleButtonN}
+            onClick={(event) => changeMonth(1, event)}
+          >
+            <p className={visibilityForOneMonth.visibility.next}>Next period</p>
+            <div className={styles.arrowN}>
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                flip="horizontal"
+                color="rgba(0, 0, 0, 0.4)"
+              ></FontAwesomeIcon>
             </div>
           </div>
         </div>
-        <VisitsCalendar inputDates={datesInCal.dates}></VisitsCalendar>
+        <div className={styles.threeDots}>
+          <div className={styles.tdContainer}>
+            <div className={styles.dot}></div>
+            <div className={styles.dot}></div>
+            <div className={styles.dot}></div>
+          </div>
+        </div>
       </div>
-    </Context.Provider>
+      <VisitsCalendar inputDates={datesInCal.dates}></VisitsCalendar>
+    </div>
   );
 }
