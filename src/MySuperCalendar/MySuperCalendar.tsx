@@ -11,9 +11,7 @@ import { DateTime } from "luxon";
 export default function MySuperCalendar() {
   // we get only months that we need to build calendar on
   // then we neet to call function that will generate visits for given months
-  const [monthsCont] = useState({
-    months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-  });
+
   const [datesInCal, setDate] = useState({
     dates: [DateTime.local()],
   });
@@ -64,7 +62,6 @@ export default function MySuperCalendar() {
   }
   function getNewMonths(quantity: number) {
     const forReturn = [];
-    const months = [];
     let forMonths = DateTime.local();
     for (let i = 0; i < quantity; i++) {
       forReturn.push(forMonths);
@@ -145,7 +142,7 @@ export default function MySuperCalendar() {
       }
     });
     ro.observe(document.getElementById("cWidth") as Element);
-  }, [monthsCont.months]);
+  }, []);
   function toggleOffVisibility() {
     function createDatesArray(startMonth: DateTime, quantityMonths: number) {
       const arrayWithDates = [];

@@ -49,13 +49,7 @@ export default function VisitsCalendar({
       }
       return false;
     }
-    function getDay(date: Date) {
-      let day = date.getDay();
-      if (day === 0) {
-        day = 7;
-      }
-      return day - 1;
-    }
+
     function quantityDaysInMonth(month: number, year: number) {
       return new Date(year, month, 0).getDate();
     }
