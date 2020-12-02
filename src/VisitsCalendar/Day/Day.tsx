@@ -89,24 +89,34 @@ export default function Day({ day }: { day: DayT }) {
       }
     }
   }, [visibleDayId, day.isVisible, day.stateThing]);
-
-  return (
-    <div
-      className={globalVisibility.isGVisible}
-      onClick={(event) => toggleGlobalVisibility(event)}
-    >
-      {day.dayNum}
+  if (day.stateThing === "special") {
+    return (
       <div
-        className={popupVisibility.isPVisible}
-        onClick={(event) => event.stopPropagation()}
+        className={globalVisibility.isGVisible}
+        onClick={(event) => toggleGlobalVisibility(event)}
       >
-        <div className={styles.activityTimeName}>
-          {toDisplayTime(day.activity.date.getHours().toString())}:
-          {toDisplayTime(day.activity.date.getMinutes().toString())}{" "}
-          {day.activity.eventName}
+        {day.dayNum}
+        <div
+          className={popupVisibility.isPVisible}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className={styles.activityTimeName}>
+            {toDisplayTime(day.activity.date.getHours().toString())}:
+            {toDisplayTime(day.activity.date.getMinutes().toString())}{" "}
+            {day.activity.eventName}
+          </div>
+          <div className={styles.traineeName}>{day.activity.trainerName}</div>
         </div>
-        <div className={styles.traineeName}>{day.activity.trainerName}</div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div
+        className={globalVisibility.isGVisible}
+        onClick={(event) => toggleGlobalVisibility(event)}
+      >
+        {day.dayNum}
+      </div>
+    );
+  }
 }
