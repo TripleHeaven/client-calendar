@@ -33,19 +33,19 @@ export default function MySuperCalendar() {
       isAnotherYear: number
     ) {
       const arrayWithDates = [];
-      const curmonth = startMonth;
-      curmonth.set({ year: curmonth.year + isAnotherYear });
+      let curmonth = startMonth;
+      curmonth = curmonth.set({ year: curmonth.year + isAnotherYear });
       for (let i = 0; i < quantityMonths; i++) {
         arrayWithDates.push(DateTime.local(curmonth.year, curmonth.month));
-        curmonth.set({ month: curmonth.month + 1 });
+        curmonth = curmonth.set({ month: curmonth.month + 1 });
       }
 
       return arrayWithDates;
     }
     let curIndex = datesInCal.dates[0].month;
     let flag = 0;
-    if (index > 0 && curIndex + datesInCal.dates.length > 11) {
-      curIndex = datesInCal.dates.length - 1;
+    if (index > 0 && curIndex + datesInCal.dates.length > 12) {
+      curIndex = datesInCal.dates.length;
       flag = 1;
     } else if (index < 0 && curIndex - datesInCal.dates.length < 0) {
       curIndex = 12 - datesInCal.dates.length - 1;
@@ -65,11 +65,10 @@ export default function MySuperCalendar() {
   function getNewMonths(quantity: number) {
     const forReturn = [];
     const months = [];
+    let forMonths = DateTime.local();
     for (let i = 0; i < quantity; i++) {
-      months.push(new Date().getMonth() + i);
-    }
-    for (let i = 0; i < months.length; i++) {
-      forReturn.push(DateTime.local(DateTime.local().year, months[i]));
+      forReturn.push(forMonths);
+      forMonths = forMonths.set({ month: forMonths.month + 1 });
     }
     return forReturn;
   }
@@ -150,11 +149,11 @@ export default function MySuperCalendar() {
   function toggleOffVisibility() {
     function createDatesArray(startMonth: DateTime, quantityMonths: number) {
       const arrayWithDates = [];
-      const curmonth = startMonth;
-      curmonth.set({ year: curmonth.year });
+      let curmonth = startMonth;
+      curmonth = curmonth.set({ year: curmonth.year });
       for (let i = 0; i < quantityMonths; i++) {
         arrayWithDates.push(DateTime.local(curmonth.year, curmonth.month));
-        curmonth.set({ month: curmonth.month + 1 });
+        curmonth = curmonth.set({ month: curmonth.month + 1 });
       }
 
       return arrayWithDates;
