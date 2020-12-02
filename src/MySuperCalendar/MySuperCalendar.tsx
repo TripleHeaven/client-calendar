@@ -47,7 +47,7 @@ export default function MySuperCalendar() {
     if (index > 0 && curIndex + datesInCal.dates.length > 12) {
       curIndex = datesInCal.dates.length;
       flag = 1;
-    } else if (index < 0 && curIndex - datesInCal.dates.length < 0) {
+    } else if (index < 0 && curIndex - datesInCal.dates.length < 1) {
       curIndex = 12 - datesInCal.dates.length - 1;
       flag = -1;
     } else {

@@ -38,11 +38,11 @@ export default function VisitsCalendar({
     for (let i = 0; i < visits.length; i++) {
       visitDates.push(visits[i].date);
     }
-    function isSpecialDay(date: Date, visitDates: Array<Date>) {
+    function isSpecialDay(date: DateTime, visitDates: Array<Date>) {
       for (let l = 0; l < visitDates.length; l++) {
         if (
-          visitDates[l].getDate() === date.getDate() &&
-          visitDates[l].getMonth() === date.getMonth()
+          visitDates[l].getDate() === date.day &&
+          visitDates[l].getMonth() === date.month - 1
         ) {
           return true;
         }
@@ -61,24 +61,21 @@ export default function VisitsCalendar({
     }
     const mon = inputDate.month;
 
-    const d = new Date(yearNumber, inputDate.month, 1);
+    let d = DateTime.local(yearNumber, inputDate.month, 1);
     const thisMonthDays: Array<DayT> = [];
-    for (let i = 0; i < getDay(d); i++) {
-      if (inputDate.month === 0) {
+    //get day = weedday
+    for (let i = 1; i < d.weekday; i++) {
+      if (inputDate.month === 1) {
         thisMonthDays.push({
           dayId: Number(
-            mon.toString() +
-              d.getDate().toString() +
-              (
-                quantityDaysInMonth(12, yearNumber - 1) -
-                (getDay(d) - i) +
-                1
-              ).toString() +
-              getRandomInt(1, 10000)
+            i.toString() +
+              d.weekday.toString() +
+              inputDate.month.toString() +
+              (d.daysInMonth - i).toString()
           ),
           dayNum: (
             quantityDaysInMonth(12, yearNumber - 1) -
-            (getDay(d) - i) +
+            (d.weekday - i) +
             1
           ).toString(),
           stateThing: "none",
@@ -88,18 +85,14 @@ export default function VisitsCalendar({
       } else {
         thisMonthDays.push({
           dayId: Number(
-            mon.toString() +
-              d.getDate().toString() +
-              (
-                quantityDaysInMonth(12, yearNumber - 1) -
-                (getDay(d) - i) +
-                1
-              ).toString() +
-              getRandomInt(1, 10000)
+            i.toString() +
+              d.weekday.toString() +
+              inputDate.month.toString() +
+              (d.daysInMonth - i).toString()
           ),
           dayNum: (
             quantityDaysInMonth(inputDate.month - 1, yearNumber) -
-            (getDay(d) - i) +
+            (d.weekday - i) +
             1
           ).toString(),
           stateThing: "none",
@@ -109,21 +102,17 @@ export default function VisitsCalendar({
       }
     }
     let indexVisit = 0;
-    while (d.getMonth() === mon) {
+    while (d.month === mon) {
       if (isSpecialDay(d, visitDates) === true) {
         sDays += 1;
         thisMonthDays.push({
           dayId: Number(
-            mon.toString() +
-              d.getDate().toString() +
-              (
-                quantityDaysInMonth(12, yearNumber - 1) -
-                (getDay(d) - sDays) +
-                1
-              ).toString() +
-              getRandomInt(1, 10000)
+            d.day.toString() +
+              d.month.toString() +
+              d.weekday.toString() +
+              getRandomInt(1, 30)
           ),
-          dayNum: d.getDate().toString(),
+          dayNum: d.day.toString(),
           stateThing: "special",
           activity: visits[indexVisit],
           isVisible: false,
@@ -132,36 +121,28 @@ export default function VisitsCalendar({
       } else {
         thisMonthDays.push({
           dayId: Number(
-            mon.toString() +
-              d.getDate().toString() +
-              (
-                quantityDaysInMonth(12, yearNumber - 1) -
-                (getDay(d) - sDays) +
-                1
-              ).toString() +
-              getRandomInt(1, 10000)
+            d.day.toString() +
+              d.month.toString() +
+              d.weekday.toString() +
+              getRandomInt(1, 30)
           ),
-          dayNum: d.getDate().toString(),
+          dayNum: d.day.toString(),
           stateThing: "regular",
           activity: { date: new Date(), eventName: "", trainerName: "" },
           isVisible: false,
         });
       }
-      d.setDate(d.getDate() + 1);
+      d = d.set({ day: d.day + 1 });
     }
     let dayNext = 1;
-    if (getDay(d) !== 0) {
-      for (let i = getDay(d); i < 7; i++) {
+    if (d.weekday !== 1) {
+      for (let i = d.weekday; i < 8; i++) {
         thisMonthDays.push({
           dayId: Number(
-            mon.toString() +
-              d.getDate().toString() +
-              (
-                quantityDaysInMonth(12, yearNumber - 1) -
-                (getDay(d) - i) +
-                1
-              ).toString() +
-              getRandomInt(1, 10000)
+            d.day.toString() +
+              d.month.toString() +
+              d.weekday.toString() +
+              getRandomInt(1, 1000)
           ),
           dayNum: dayNext.toString(),
           stateThing: "none",
@@ -188,7 +169,7 @@ export default function VisitsCalendar({
       for (let i = 0; i < inputDates.length; i++) {
         const iterObject = makeADaysArray(
           inputDates[i],
-          getVisitsForOneMonth(2, inputDates[i].month).visitsList
+          getVisitsForOneMonth(2, inputDates[i].month - 1).visitsList
         );
         arrayWithDays.push(iterObject);
       }
@@ -196,7 +177,6 @@ export default function VisitsCalendar({
     }
     setVisibleDay(0);
     createCalendarItems();
-    console.log(inputDates);
   }, [inputDates]);
 
   return (
