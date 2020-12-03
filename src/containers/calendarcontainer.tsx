@@ -171,6 +171,12 @@ function useCalendar(initialState = []) {
     createCalendarItems();
   }, [inputDates]);
 
-  return { calendarItems, visibleDayId, setVisibleDay, setCalendarItems };
+  return {
+    calendarItems,
+    visibleDayId,
+    setVisibleDay,
+    setCalendarItems,
+    inputDates,
+  };
 }
 export const CalUse = createContainer(useCalendar);
