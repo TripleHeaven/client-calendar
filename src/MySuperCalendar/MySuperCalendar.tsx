@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import VisitsCalendar from "../VisitsCalendar/VisitsCalendar";
 import ResizeObserver from "resize-observer-polyfill";
 import { DateTime } from "luxon";
+import { CalUse } from "../containers/calendarcontainer";
 export default function MySuperCalendar() {
   // we get only months that we need to build calendar on
   // then we neet to call function that will generate visits for given months
@@ -180,53 +181,62 @@ export default function MySuperCalendar() {
   }
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
+
   return (
-    <div
-      ref={wrapperRef}
-      className={styles.container}
-      id="cWidth"
-      onClick={() => toggleOffVisibility()}
-    >
-      <div className={styles.title}>
-        <p className={styles.mainTitle}>Visits calendar</p>
-        <div className={visibilityForOneMonth.visibility.tb}>
-          <div className={visibilityForOneMonth.visibility.tbS}>
-            Show Months
-          </div>
-          <div
-            className={styles.titleButton}
-            onClick={(event) => changeMonth(-1, event)}
-          >
-            <div className={styles.arrowI}>
-              <FontAwesomeIcon icon={faArrowLeft} color="rgba(0, 0, 0, 0.4)" />
+    <CalUse.Provider initialState={datesInCal.dates}>
+      <div
+        ref={wrapperRef}
+        className={styles.container}
+        id="cWidth"
+        onClick={() => toggleOffVisibility()}
+      >
+        <div className={styles.title}>
+          <p className={styles.mainTitle}>Visits calendar</p>
+          <div className={visibilityForOneMonth.visibility.tb}>
+            <div className={visibilityForOneMonth.visibility.tbS}>
+              Show Months
             </div>
-            <p className={visibilityForOneMonth.visibility.prev}>
-              Previouts period
-            </p>
+            <div
+              className={styles.titleButton}
+              onClick={(event) => changeMonth(-1, event)}
+            >
+              <div className={styles.arrowI}>
+                <FontAwesomeIcon
+                  icon={faArrowLeft}
+                  color="rgba(0, 0, 0, 0.4)"
+                />
+              </div>
+              <p className={visibilityForOneMonth.visibility.prev}>
+                Previouts period
+              </p>
+            </div>
+            <div
+              className={styles.titleButtonN}
+              onClick={(event) => changeMonth(1, event)}
+            >
+              <p className={visibilityForOneMonth.visibility.next}>
+                Next period
+              </p>
+              <div className={styles.arrowN}>
+                <FontAwesomeIcon
+                  icon={faArrowLeft}
+                  flip="horizontal"
+                  color="rgba(0, 0, 0, 0.4)"
+                ></FontAwesomeIcon>
+              </div>
+            </div>
           </div>
-          <div
-            className={styles.titleButtonN}
-            onClick={(event) => changeMonth(1, event)}
-          >
-            <p className={visibilityForOneMonth.visibility.next}>Next period</p>
-            <div className={styles.arrowN}>
-              <FontAwesomeIcon
-                icon={faArrowLeft}
-                flip="horizontal"
-                color="rgba(0, 0, 0, 0.4)"
-              ></FontAwesomeIcon>
+          <div className={styles.threeDots}>
+            <div className={styles.tdContainer}>
+              <div className={styles.dot}></div>
+              <div className={styles.dot}></div>
+              <div className={styles.dot}></div>
             </div>
           </div>
         </div>
-        <div className={styles.threeDots}>
-          <div className={styles.tdContainer}>
-            <div className={styles.dot}></div>
-            <div className={styles.dot}></div>
-            <div className={styles.dot}></div>
-          </div>
-        </div>
+
+        <VisitsCalendar></VisitsCalendar>
       </div>
-      <VisitsCalendar inputDates={datesInCal.dates}></VisitsCalendar>
-    </div>
+    </CalUse.Provider>
   );
 }
