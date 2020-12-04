@@ -25,17 +25,11 @@
   font-weight: 500;
   width: 100%;
 }
-/* .titleButtonS:hover {
-  cursor: pointer;
-  font-weight: 600;
-} */
 .titleButtonN:hover {
   cursor: pointer;
-  /* font-weight: 550; */
 }
 .titleButton:hover {
   cursor: pointer;
-  /* font-weight: 550; */
 }
 .mainTitle {
   display: inline-block;
@@ -60,7 +54,6 @@
 .arrowI {
   width: 15px;
   height: 15px;
-
   display: inline-block;
 }
 .arrowN {
@@ -68,12 +61,13 @@
   height: 15px;
   padding-left: 1px;
 }
-.titleButtons p {
-  display: inline-block;
+.titleButtons {
+  p {
+    display: inline-block;
+  }
 }
 .titleButton {
   min-width: 20px;
-
   cursor: pointer;
 }
 .titleButtonS {
@@ -81,7 +75,6 @@
   font-size: 13px;
   min-width: 50px;
   cursor: pointer;
-
   flex-shrink: 1;
 }
 .titleButtonN {
@@ -91,13 +84,10 @@
   cursor: pointer;
   display: flex;
   max-height: 15px;
+  p {
+    width: 67px;
+  }
 }
-.titleButtonN p {
-  width: 67px;
-}
-
-/* 440 px */
-
 .tbHidden {
   display: flex;
   min-width: 50px;
@@ -111,7 +101,6 @@
 .notVisibleHidden {
   display: none;
 }
-
 .tdContainer {
   display: flex;
   justify-content: space-between;
@@ -134,9 +123,9 @@
   display: inline-block;
   width: 110px;
   font-weight: 500;
-}
-.categoryName text {
-  padding-left: 10px;
+  text {
+    padding-left: 10px;
+  }
 }
 .param {
   display: inline-block;
@@ -152,8 +141,10 @@
   padding-top: 4px;
   color: rgba(0, 0, 0, 0.4);
 }
-.categoryName p {
-  display: inline;
+.categoryName {
+  p {
+    display: inline;
+  }
 }
 .calendarContainer {
   display: flex;

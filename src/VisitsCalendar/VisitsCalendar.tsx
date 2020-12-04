@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import styles from "./VisitsCalendar.css";
+import React from "react";
+import styles from "./VisitsCalendar.scss";
 import CreateCalendar from "./CreateCalendar";
 import { CalUse } from "../containers/calendarcontainer";
 

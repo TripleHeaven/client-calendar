@@ -5,6 +5,9 @@ html,
 body {
   margin: 0;
 }
+p {
+  margin: 0;
+}
 .calendarContainer {
   position: relative;
   width: 180px;
@@ -17,14 +20,11 @@ body {
   justify-content: space-between;
   font-size: 12px;
   padding-left: 8px;
-}
-p {
-  margin: 0;
-}
-.calendarDays p {
-  width: 11px;
-  text-align: center;
-  justify-content: center;
+  p {
+    width: 11px;
+    text-align: center;
+    justify-content: center;
+  }
 }
 .daysItself {
   display: flex;
@@ -37,13 +37,10 @@ p {
   font-size: 12px;
   display: flex;
   width: 180px;
-  /* height: 100px; */
   flex-wrap: wrap;
-
   justify-content: flex-start;
   margin-top: 10px;
 }
-
 .month {
   font-size: 12px;
   display: flex;

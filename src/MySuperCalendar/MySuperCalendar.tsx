@@ -1,5 +1,5 @@
 import React, { RefObject } from "react";
-import styles from "./MySuperCalendar.css";
+import styles from "./MySuperCalendar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";

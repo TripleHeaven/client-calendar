@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import styles from "./Day.css";
+import styles from "./Day.scss";
 import { DayT } from "../../TypesTS/DayT";
 import { CalUse } from "../../containers/calendarcontainer";
 export default function Day({ day }: { day: DayT }) {

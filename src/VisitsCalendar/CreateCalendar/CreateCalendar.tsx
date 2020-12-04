@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./CreateCalendar.css";
+import styles from "./CreateCalendar.scss";
 import { DayT } from "../../TypesTS/DayT";
 import Day from "../Day/Day";
 
