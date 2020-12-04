@@ -1,15 +1,11 @@
 import { createContainer } from "unstated-next";
-import React, { useEffect, useState } from "react";
-import styles from "./VisitsCalendar.css";
-import CreateCalendar from "./CreateCalendar";
+import { useEffect, useState } from "react";
 import { getVisitsForOneMonth } from "../visitsContainer/visitsContainer";
 import { DayT } from "../TypesTS/DayT";
 import { VisitT } from "../TypesTS/VisitT";
 import { CalendarItemT } from "../TypesTS/CalendarItemT";
-import { VisibilityContext } from "./VisibilityContext";
 import { DateTime } from "luxon";
-function useCalendar(initialState = []) {
-  let inputDates = initialState;
+function useCalendar(initialState = [DateTime.local()]) {
   function makeADaysArray(inputDate: DateTime, visits: VisitT[]) {
     function getRandomInt(min: number, max: number) {
       min = Math.ceil(min);
@@ -52,10 +48,8 @@ function useCalendar(initialState = []) {
       return new Date(year, month, 0).getDate();
     }
     const mon = inputDate.month;
-
     let d = DateTime.local(yearNumber, inputDate.month, 1);
     const thisMonthDays: Array<DayT> = [];
-    //get day = weedday
     for (let i = 1; i < d.weekday; i++) {
       if (inputDate.month === 1) {
         thisMonthDays.push({
@@ -158,10 +152,10 @@ function useCalendar(initialState = []) {
   useEffect(() => {
     function createCalendarItems() {
       const arrayWithDays: CalendarItemT[] = [];
-      for (let i = 0; i < inputDates.length; i++) {
+      for (let i = 0; i < initialState.length; i++) {
         const iterObject = makeADaysArray(
-          inputDates[i],
-          getVisitsForOneMonth(2, inputDates[i].month - 1).visitsList
+          initialState[i],
+          getVisitsForOneMonth(2, initialState[i].month - 1).visitsList
         );
         arrayWithDays.push(iterObject);
       }
@@ -169,14 +163,14 @@ function useCalendar(initialState = []) {
     }
     setVisibleDay(0);
     createCalendarItems();
-  }, [inputDates]);
+  }, [initialState]);
 
   return {
     calendarItems,
     visibleDayId,
     setVisibleDay,
     setCalendarItems,
-    inputDates,
+    initialState,
   };
 }
 export const CalUse = createContainer(useCalendar);

@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./VisitsCalendar.css";
 import CreateCalendar from "./CreateCalendar";
-import { getVisitsForOneMonth } from "../visitsContainer/visitsContainer";
-import { DayT } from "../TypesTS/DayT";
-import { VisitT } from "../TypesTS/VisitT";
-import { CalendarItemT } from "../TypesTS/CalendarItemT";
-import { VisibilityContext } from "./VisibilityContext";
-import { DateTime } from "luxon";
 import { CalUse } from "../containers/calendarcontainer";
-import { createContainer, useContainer } from "unstated-next";
+
 export default function VisitsCalendar() {
   const calCont = CalUse.useContainer();
-
   return (
     <div className={styles.container} id="cWidth">
       <div className={styles.calendarContainer}>
