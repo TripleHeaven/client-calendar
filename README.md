@@ -1,1 +1,22 @@
-# react-hooks-parcel-typescript-sass-starter
+### Адаптивный календарь на React Hooks + uxon + Unstated-next
+
+### Функции
+   - Календарь адаптивен, его можно подстроить в любой участок сайта и он сам автоматически подберет оптимальный параметр колчисества календариков внутри себя 
+   - Календарь может принимать в себя мероприятия и отображать их дату и описание 
+   - Календарь использует не тип Date, а luxon
+
+## Внешний вид 
+
+![](Main.png "Main Page")
+
+![](Adaptive.png "Adaptive quantity")
+
+![](luxon.png "display luxon datatype")
+
+![](Popup.png "Modal Window")
+
+# Компиляция
+
+```
+yarn start
+```
